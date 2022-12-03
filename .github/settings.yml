@@ -1,0 +1,5 @@
+repository:
+  name: "ipams"
+  description: "Tool to query multiple IPAMs."
+  homepage: "https://rwxd.github.io/ipams/"
+  topics: "netbox, ipam"

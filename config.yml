@@ -1,0 +1,5 @@
+---
+netboxes:
+  - name: NetBox Demo
+    url: https://demo.netbox.dev/
+    token: 75d956ee746641e844f7fa26b63c6741d287c776
