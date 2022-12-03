@@ -1,6 +1,8 @@
 from setuptools import setup
 from os import path
 
+__version__ = "1.0.0"
+
 with open("./requirements.txt") as f:
     required = f.read().splitlines()
 
@@ -10,7 +12,7 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='ipams',
-    version='1.0.0',
+    version=__version__,
     description='Tool to query multiple IPAMs.',
     long_description=long_description,
     long_description_content_type='text/markdown',
