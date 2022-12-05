@@ -1,5 +1,11 @@
 # ipams - Query multiple IPAMs
 
+## Supported IPAMs
+
+- [NetBox](https://docs.netbox.dev/en/stable/) (wip)
+- [phpIPAM](https://phpipam.net/) (wip)
+
+
 ## Configuration
 
 Save the configuration under `$HOME/.config/ipams/config.yml`
@@ -11,6 +17,11 @@ netboxes:
   - name: NetBox Demo
     url: https://demo.netbox.dev/
     token: 75d956ee746641e844f7fa26b63c6741d287c776
+phpipams:
+	- name: phpIPAM Demo
+	  url: https://demo.phpipam.net/
+	  app_id: ipams
+	  token: 75d956ee746641e844f7fa26b63c6741d287c776
 ```
 
 ## Usage
