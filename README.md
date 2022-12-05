@@ -35,6 +35,13 @@ netboxes:
     token: 75d956ee746641e844f7fa26b63c6741d287c776
 ```
 
+### Use example config
+
+```bash
+mkdir -p $HOME/.config/ipams
+cp config.yml $HOME/.config/ipams/config.yml
+```
+
 ## Usage
 
 ### IP
