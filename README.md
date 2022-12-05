@@ -1,10 +1,26 @@
 # ipams - Query multiple IPAMs
 
+## Install
+
+### Pip
+
+```bash
+pip -U install ipams
+```
+
+### Pipx
+
+```bash
+pipx -U install ipams
+```
+
 ## Supported IPAMs
 
 - [NetBox](https://docs.netbox.dev/en/stable/) (wip)
-- [phpIPAM](https://phpipam.net/) (wip)
 
+### Planned
+
+- [phpIPAM](https://phpipam.net/)
 
 ## Configuration
 
@@ -17,11 +33,6 @@ netboxes:
   - name: NetBox Demo
     url: https://demo.netbox.dev/
     token: 75d956ee746641e844f7fa26b63c6741d287c776
-phpipams:
-	- name: phpIPAM Demo
-	  url: https://demo.phpipam.net/
-	  app_id: ipams
-	  token: 75d956ee746641e844f7fa26b63c6741d287c776
 ```
 
 ## Usage
