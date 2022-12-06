@@ -16,7 +16,7 @@ class DefaultNetBoxTable(Table):
 class NetBoxIPTable(DefaultNetBoxTable):
     def __init__(self, name: str, *args, **kwargs):
         super().__init__(title=name, *args, **kwargs)
-        self.add_column("Address", justify="left", style="magenta")
+        self.add_column("Address", justify="left", style="magenta", no_wrap=True)
         self.add_column("Tenant", justify="left", style="magenta")
         self.add_column("VRF", justify="left", style="magenta")
         self.add_column("Description", justify="left", style="green")
@@ -29,10 +29,10 @@ class NetBoxIPTable(DefaultNetBoxTable):
 class NetBoxHostTable(DefaultNetBoxTable):
     def __init__(self, name: str, *args, **kwargs):
         super().__init__(title=name, *args, **kwargs)
-        self.add_column("Device", justify="left", style="magenta")
+        self.add_column("Device", justify="left", style="magenta", no_wrap=True)
         self.add_column("Site", justify="left", style="magenta")
         self.add_column("Tenant", justify="left", style="magenta")
-        self.add_column("Address", justify="left", style="magenta")
+        self.add_column("Address", justify="left", style="magenta", no_wrap=True)
         self.add_column("Link", justify="left", style="green")
 
     def add_row(
@@ -49,7 +49,7 @@ class NetBoxHostTable(DefaultNetBoxTable):
 class NetBoxNetworkTable(DefaultNetBoxTable):
     def __init__(self, name: str, *args, **kwargs):
         super().__init__(title=name, *args, **kwargs)
-        self.add_column("Network", justify="left", style="magenta")
+        self.add_column("Network", justify="left", style="magenta", no_wrap=True)
         self.add_column("Tenant", justify="left", style="magenta")
         self.add_column("VRF", justify="left", style="magenta")
         self.add_column("Description", justify="left", style="green")
