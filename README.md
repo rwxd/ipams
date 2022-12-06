@@ -11,7 +11,13 @@ pip -U install ipams
 ### Pipx
 
 ```bash
-pipx -U install ipams
+pipx install ipams
+```
+
+Update
+
+```bash
+pipx upgrade ipams
 ```
 
 ## Supported IPAMs
