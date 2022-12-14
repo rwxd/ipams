@@ -1,4 +1,4 @@
 repository:
   name: "ipams"
   description: "Tool to query multiple IPAMs."
-  topics: "netbox, ipam"
+  topics: "netbox, ipam, phpipam"
