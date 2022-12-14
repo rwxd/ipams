@@ -82,4 +82,4 @@ class PhpIpamIpTable(DefaultPhpIpam):
     def add_row(
         self, address: str, hostname: str, section: str, description: str, link: str
     ):
-        super().add_row(address, hostname, section, description, link)
+        super().add_row(address, section, hostname, description, link)

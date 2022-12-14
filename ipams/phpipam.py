@@ -4,6 +4,7 @@ from typing import Optional, Literal, Union
 from ipams.logging import logger
 from ipams.output import PhpIpamIpTable
 from pydantic import BaseModel
+from functools import lru_cache
 
 _phpipamauth = Literal['password', 'token']
 
@@ -90,11 +91,32 @@ class PhpIpamConnector(BaseModel):
         response = self.get(f'/addresses/search/{str(ip)}/')
         data = response.json()
         for address in data['data']:
+            subnet_id = address['subnetId']
+            section = self._get_section_for_subnet(subnet_id)
             results.add_row(
                 address=address['ip'],
                 hostname=address['hostname'],
-                section='',
+                section=section['name'],
                 description=address['description'],
-                link='',
+                link=self._build_link(
+                    f'/subnets/{section["id"]}/{subnet_id}/address-details/{address["id"]}'
+                ),
             )
         return results
+
+    def _get_section(self, section: int) -> dict:
+        endpoint = f'/sections/{section}/'
+        response = self.get(endpoint)
+        return response.json()['data']
+
+    def _get_subnet(self, subnet_id: int) -> dict:
+        endpoint = f'/subnets/{subnet_id}/'
+        response = self.get(endpoint)
+        return response.json()['data']
+
+    def _get_section_for_subnet(self, subnet_id: int) -> dict:
+        subnet = self._get_subnet(subnet_id)
+        return self._get_section(subnet['sectionId'])
+
+    def _build_link(self, extra: str) -> str:
+        return f'{self.url.rstrip("/")}/{extra.lstrip("/")}'
