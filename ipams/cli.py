@@ -38,12 +38,25 @@ def host(
     ),
 ):
     parsed_config = parse_config(config)
+    ip = None
+    try:
+        ip = ip_address(query)
+    except ValueError:
+        pass
+
     for nb in parsed_config.netboxes:
-        try:
-            ip = ip_address(query)
+        if ip:
             table = nb.query_host_by_ip(ip)
-        except ValueError:
+        else:
             table = nb.query_host_by_name(query)
+        if len(table.rows) > 0:
+            console.print(table)
+
+    for phpipam in parsed_config.phpipams:
+        if ip:
+            table = phpipam.query_host_by_ip(ip)
+        else:
+            table = phpipam.query_host_by_name(query)
         if len(table.rows) > 0:
             console.print(table)
 
@@ -56,11 +69,24 @@ def network(
     ),
 ):
     parsed_config = parse_config(config)
+    subnet = None
+    try:
+        subnet = ip_network(query)
+    except ValueError:
+        subnet = None
+
     for nb in parsed_config.netboxes:
-        try:
-            address = ip_network(query)
-            table = nb.query_network_by_address(address)
-        except ValueError:
+        if subnet:
+            table = nb.query_network_by_address(subnet)
+        else:
             table = nb.query_network_by_string(query)
+        if len(table.rows) > 0:
+            console.print(table)
+
+    for phpipam in parsed_config.phpipams:
+        if subnet:
+            table = phpipam.query_network_by_address(subnet)
+        else:
+            table = phpipam.query_network_by_string(query)
         if len(table.rows) > 0:
             console.print(table)

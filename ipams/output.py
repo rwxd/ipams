@@ -77,9 +77,36 @@ class PhpIpamIpTable(DefaultPhpIpam):
         self.add_column("Section", justify="left", style="magenta")
         self.add_column("Hostname", justify="left", style="magenta", no_wrap=True)
         self.add_column("Description", justify="left", style="green")
-        self.add_column("Link", justify="left", style="green")
+        self.add_column("Link", justify="left", style="green", no_wrap=True)
 
     def add_row(
         self, address: str, hostname: str, section: str, description: str, link: str
     ):
         super().add_row(address, section, hostname, description, link)
+
+
+class PhpIpamHostTable(DefaultPhpIpam):
+    def __init__(self, name: str, *args, **kwargs):
+        super().__init__(title=name, *args, **kwargs)
+        self.add_column("Hostname", justify="left", style="magenta", no_wrap=True)
+        self.add_column("Section", justify="left", style="magenta")
+        self.add_column("Address", justify="left", style="magenta", no_wrap=True)
+        self.add_column("Description", justify="left", style="green")
+        self.add_column("Link", justify="left", style="green", no_wrap=True)
+
+    def add_row(
+        self, address: str, hostname: str, section: str, description: str, link: str
+    ):
+        super().add_row(hostname, section, address, description, link)
+
+
+class PhpIpamNetworkTable(DefaultPhpIpam):
+    def __init__(self, name: str, *args, **kwargs):
+        super().__init__(title=name, *args, **kwargs)
+        self.add_column("Network", justify="left", style="magenta", no_wrap=True)
+        self.add_column("Section", justify="left", style="magenta")
+        self.add_column("Description", justify="left", style="green")
+        self.add_column("Link", justify="left", style="green", no_wrap=True)
+
+    def add_row(self, network: str, section: str, description: str, link: str):
+        super().add_row(network, section, description, link)
