@@ -74,8 +74,8 @@ class PhpIpamIpTable(DefaultPhpIpam):
     def __init__(self, name: str, *args, **kwargs):
         super().__init__(title=name, *args, **kwargs)
         self.add_column("Address", justify="left", style="magenta", no_wrap=True)
-        self.add_column("Hostname", justify="left", style="magenta", no_wrap=True)
         self.add_column("Section", justify="left", style="magenta")
+        self.add_column("Hostname", justify="left", style="magenta", no_wrap=True)
         self.add_column("Description", justify="left", style="green")
         self.add_column("Link", justify="left", style="green")
 
