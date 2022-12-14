@@ -21,12 +21,12 @@ def ip(
     parsed_config = parse_config(config)
     for nb in parsed_config.netboxes:
         table = nb.query_ip(converted)
-        if len(table.columns) > 0:
+        if len(table.rows) > 0:
             console.print(table)
 
     for phpipam in parsed_config.phpipams:
         table = phpipam.query_ip(converted)
-        if len(table.columns) > 0:
+        if len(table.rows) > 0:
             console.print(table)
 
 
@@ -44,7 +44,7 @@ def host(
             table = nb.query_host_by_ip(ip)
         except ValueError:
             table = nb.query_host_by_name(query)
-        if len(table.columns) > 0:
+        if len(table.rows) > 0:
             console.print(table)
 
 
@@ -62,5 +62,5 @@ def network(
             table = nb.query_network_by_address(address)
         except ValueError:
             table = nb.query_network_by_string(query)
-        if len(table.columns) > 0:
+        if len(table.rows) > 0:
             console.print(table)
