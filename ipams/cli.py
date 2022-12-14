@@ -24,6 +24,11 @@ def ip(
         if len(table.columns) > 0:
             console.print(table)
 
+    for phpipam in parsed_config.phpipams:
+        table = phpipam.query_ip(converted)
+        if len(table.columns) > 0:
+            console.print(table)
+
 
 @app.command()
 def host(

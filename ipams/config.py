@@ -2,22 +2,12 @@ from pathlib import Path
 from pydantic import BaseModel
 import yaml
 from ipams.netbox import NetBoxConnector
-
-
-class NetBox(BaseModel):
-    url: str
-    token: str
-
-
-class PhpIPAMs(BaseModel):
-    url: str
-    token: str
-    app_id: str
+from ipams.phpipam import PhpIpamConnector
 
 
 class Config(BaseModel):
     netboxes: list[NetBoxConnector] = []
-    phpipams: list[PhpIPAMs] = []
+    phpipams: list[PhpIpamConnector] = []
 
 
 def parse_config(config: Path) -> Config:
