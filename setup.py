@@ -1,7 +1,7 @@
 from setuptools import setup
 from os import path
 
-__version__ = "1.0.8"
+__version__ = "1.1.0"
 
 with open("./requirements.txt") as f:
     required = f.read().splitlines()
