@@ -1,5 +1,6 @@
 from setuptools import setup
 from os import path
+from subprocess import check_output
 
 __version__ = "1.2.0"
 
@@ -9,6 +10,13 @@ with open("./requirements.txt") as f:
 this_directory = path.abspath(path.dirname(__file__))
 with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
+
+try:
+    __version__ = (
+        check_output(['git', 'describe', '--tags']).strip().decode().replace('v', '')
+    )
+except:
+    pass
 
 setup(
     name='ipams',
