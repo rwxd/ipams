@@ -1,4 +1,4 @@
-from ipaddress import IPv4Address, IPv4Network, IPv6Address
+from ipaddress import IPv4Address, IPv4Network, IPv6Address, IPv6Network
 import requests
 from typing import Optional, Literal, Union
 from ipams.logging import logger
@@ -125,8 +125,8 @@ class PhpIpamConnector(BaseModel):
         return results
 
     def query_network_by_address(
-        self, address: Union[IPv4Network, IPv4Network]
-    ) -> PhpIpamIpTable:
+        self, address: Union[IPv4Network, IPv6Network]
+    ) -> PhpIpamNetworkTable:
         results = PhpIpamNetworkTable(self.name)
         response = self.get(f'/subnets/search/{str(address)}/')
         if response.status_code == 404:
@@ -142,7 +142,7 @@ class PhpIpamConnector(BaseModel):
             )
         return results
 
-    def query_network_by_string(self, query: str) -> PhpIpamIpTable:
+    def query_network_by_string(self, query: str) -> PhpIpamNetworkTable:
         results = PhpIpamNetworkTable(self.name)
         response = self.get(f'/subnets/')
         if response.status_code == 500:
