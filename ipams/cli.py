@@ -3,6 +3,7 @@ from ipaddress import ip_address, ip_network
 from pathlib import Path
 from ipams.config import parse_config
 from rich.console import Console
+import importlib.metadata
 
 app = typer.Typer()
 console = Console()
@@ -90,3 +91,8 @@ def network(
             table = phpipam.query_network_by_string(query)
         if len(table.rows) > 0:
             console.print(table)
+
+
+@app.command()
+def version():
+    console.print(importlib.metadata.version('ipams'))
