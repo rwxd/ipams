@@ -1,10 +1,11 @@
-from setuptools import setup
 from os import path
 from subprocess import check_output
 
-__version__ = "1.2.0"
+from setuptools import setup
 
-with open("./requirements.txt") as f:
+__version__ = '1.2.0'
+
+with open('./requirements.txt') as f:
     required = f.read().splitlines()
 
 this_directory = path.abspath(path.dirname(__file__))
@@ -15,7 +16,7 @@ try:
     __version__ = (
         check_output(['git', 'describe', '--tags']).strip().decode().replace('v', '')
     )
-except:
+except Exception:
     pass
 
 setup(
@@ -26,11 +27,11 @@ setup(
     long_description_content_type='text/markdown',
     author='rwxd',
     author_email='rwxd@pm.me',
-    url="https://github.com/rwxd/ipams",
+    url='https://github.com/rwxd/ipams',
     license='MIT',
     packages=['ipams'],
     install_requires=required,
-    entry_points={"console_scripts": ["ipams = ipams.__main__:main"]},
+    entry_points={'console_scripts': ['ipams = ipams.__main__:main']},
     classifiers=[
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',

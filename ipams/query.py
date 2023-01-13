@@ -1,6 +1,7 @@
 from ipaddress import IPv4Address, IPv6Address
-from pydantic import BaseModel
 from typing import Union
+
+from pydantic import BaseModel
 
 
 class IPQuery(BaseModel):
@@ -10,4 +11,4 @@ class IPQuery(BaseModel):
     link: str
 
     def __str__(self):
-        return f"{self.ip} - {self.description} - {self.link}"
+        return f'{self.ip} - {self.description} - {self.link}'

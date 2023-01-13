@@ -1,40 +1,44 @@
 from ipaddress import IPv4Address, IPv4Network, IPv6Address, IPv6Network
+from typing import Literal, Optional, Union
+
 import requests
-from typing import Optional, Literal, Union
+from pydantic import BaseModel
+
 from ipams.logging import logger
 from ipams.output import PhpIpamHostTable, PhpIpamIpTable, PhpIpamNetworkTable
-from pydantic import BaseModel
-from ipams.logging import logger
 
 _phpipamauth = Literal['password', 'token']
 
 
-class PhpIpamConnector(BaseModel):
+class PhpIpamConfig(BaseModel):
+    """Configuration for PhpIpam API"""
+
     name: str
     url: str
+    app_id: str
     username: Optional[str] = None
     password: Optional[str] = None
-    app_id: Optional[str] = None
     token: Optional[str] = None
     verify_ssl: bool = True
-    api_url = ''
-    auth_method: _phpipamauth = 'token'
-    session: Optional[requests.Session] = None
 
-    class Config:
-        arbitrary_types_allowed = True
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+class PhpIpamConnector:
+    def __init__(self, config: PhpIpamConfig):
+        self.name = config.name
+        self.url = config.url
+        self.app_id = config.app_id
+        self.username = config.username
+        self.password = config.password
+        self.token = config.token
+        self.verify_ssl = config.verify_ssl
+
         self.api_url = f'{self.url.rstrip("/")}/api/{self.app_id}'
 
+        self.auth_method: _phpipamauth = 'token'
         if not self.token:
-            self.auth_method: _phpipamauth = 'password'
-        else:
-            self.auth_method: _phpipamauth = 'token'
+            self.auth_method = 'password'
 
-        if not self.session:
-            self.session = self._init_session()
+        self.session = self._init_session()
 
     def _init_session(self) -> requests.Session:
         session = requests.Session()
@@ -144,10 +148,10 @@ class PhpIpamConnector(BaseModel):
 
     def query_network_by_string(self, query: str) -> PhpIpamNetworkTable:
         results = PhpIpamNetworkTable(self.name)
-        response = self.get(f'/subnets/')
+        response = self.get('/subnets/')
         if response.status_code == 500:
             logger.warning(f'Query on phpipam "{self.name}" failed with error code 500')
-            logger.warning(f'Please take a look in the phpipam server error log')
+            logger.warning('Please take a look in the phpipam server error log')
             return results
         elif response.status_code != 200:
             return results
