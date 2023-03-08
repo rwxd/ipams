@@ -11,7 +11,6 @@ setup: ## install required modules
 	python -m pip install -U -r requirements.txt
 	python -m pip install -U -r requirements-dev.txt
 	pre-commit install
-	pre-commit install-hooks
 
 unit: ## run unit tests
 	python -m pytest -vvl tests/unit/ --showlocals
