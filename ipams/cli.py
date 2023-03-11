@@ -22,6 +22,9 @@ def ip(
         default_config_path, '--config', '-c', help='Path to config file'
     ),
 ):
+    '''
+    Query IPAMs for IP address
+    '''
     converted = ip_address(ip)
     parsed_config = parse_config(config)
     for nb in parsed_config.netboxes:
@@ -42,6 +45,9 @@ def host(
         default_config_path, '--config', '-c', help='Path to config file'
     ),
 ):
+    '''
+    Query IPAMs for host name or IP address
+    '''
     parsed_config = parse_config(config)
     ip = None
     try:
@@ -73,6 +79,9 @@ def network(
         default_config_path, '--config', '-c', help='Path to config file'
     ),
 ):
+    '''
+    Query IPAMs for network name or address
+    '''
     parsed_config = parse_config(config)
     subnet = None
     try:
@@ -105,7 +114,7 @@ def subnet(
     ),
 ):
     '''
-    Query hosts from a subnet
+    Query IPAMs for hosts in a subnet
     '''
     cidr = ip_network(query)
     parsed_config = parse_config(config)
