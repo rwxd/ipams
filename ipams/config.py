@@ -17,6 +17,6 @@ def parse_config(config: Path) -> Config:
     if not config.exists():
         raise FileNotFoundError(f'Config file {config} does not exist')
     if config.suffix in ['.yaml', '.yml']:
-        with open(config, 'r') as f:
+        with open(config) as f:
             return Config.parse_obj(yaml.safe_load(f))
     return Config.parse_file(config)
