@@ -98,5 +98,23 @@ def network(
 
 
 @app.command()
+def subnet(
+    query: str = typer.Argument(..., help='Subnet CIDR to query hosts from'),
+    config: Path = typer.Option(
+        default_config_path, '--config', '-c', help='Path to config file'
+    ),
+):
+    '''
+    Query hosts from a subnet
+    '''
+    cidr = ip_network(query)
+    parsed_config = parse_config(config)
+    for nb in parsed_config.netboxes:
+        table = NetBoxConnector(nb).query_subnet_by_cidr(cidr)
+        if len(table.rows) > 0:
+            console.print(table)
+
+
+@app.command()
 def version():
     console.print(importlib.metadata.version('ipams'))

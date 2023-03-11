@@ -4,7 +4,12 @@ from typing import Union
 from pydantic import BaseModel
 from pynetbox.core.api import Api
 
-from ipams.output import NetBoxHostTable, NetBoxIPTable, NetBoxNetworkTable
+from ipams.output import (
+    NetBoxHostTable,
+    NetBoxIPTable,
+    NetBoxNetworkTable,
+    NetBoxSubnetTable,
+)
 
 
 class NetBoxConfig(BaseModel):
@@ -71,7 +76,7 @@ class NetBoxConnector:
         self, network: Union[IPv4Network, IPv6Network]
     ) -> NetBoxNetworkTable:
         results = NetBoxNetworkTable(self.name)
-        for q_network in self.conn.ipam.prefixes.filter(q=str(network)):
+        for q_network in self.conn.ipam.prefixes.filter(q=network.compressed):
             results.add_row(
                 network=str(q_network.prefix),
                 vrf=q_network.vrf.name if q_network.vrf else '',
@@ -91,4 +96,23 @@ class NetBoxConnector:
                 description=str(q_network.description),
                 link=f"{self.url.rstrip('/')}/ipam/prefixes/{q_network.id}/",
             )
+        return results
+
+    def query_subnet_by_cidr(
+        self, cidr: IPv4Network | IPv6Network
+    ) -> NetBoxSubnetTable:
+        results = NetBoxSubnetTable(self.name)
+        for q_ip in self.conn.ipam.ip_addresses.filter(
+            parent=cidr.compressed, assigned_to_interface=True
+        ):
+            if q_ip.assigned_object and q_ip.assigned_object.device:
+                device = self.conn.dcim.devices.get(id=q_ip.assigned_object.device.id)
+                if device:
+                    results.add_row(
+                        tenant=device.tenant.name if device.tenant else '',
+                        site=device.site.name if device.site else '',
+                        device=device.name,
+                        address=str(q_ip.address),
+                        link=f"{self.url.rstrip('/')}/dcim/devices/{device.id}/",
+                    )
         return results

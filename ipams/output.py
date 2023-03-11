@@ -62,6 +62,10 @@ class NetBoxNetworkTable(DefaultNetBoxTable):
         super().add_row(network, tenant, vrf, description, link)
 
 
+class NetBoxSubnetTable(NetBoxHostTable):
+    pass
+
+
 class DefaultPhpIpam(Table):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
