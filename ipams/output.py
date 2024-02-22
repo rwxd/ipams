@@ -24,7 +24,15 @@ class NetBoxIPTable(DefaultNetBoxTable):
         self.add_column('Description', justify='left', style='green')
         self.add_column('Link', justify='left', style='green')
 
-    def add_row(self, vrf: str, tenant: str, address: str, hostname: str, description: str, link: str):
+    def add_row(
+        self,
+        vrf: str,
+        tenant: str,
+        address: str,
+        hostname: str,
+        description: str,
+        link: str,
+    ):
         super().add_row(address, hostname, tenant, vrf, description, link)
 
 
