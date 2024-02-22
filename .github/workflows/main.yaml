@@ -7,7 +7,7 @@ on:
       - "v*.*.*"
 
 jobs:
-  test:
+  pre-commit:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -22,10 +22,32 @@ jobs:
         run: pre-commit run --show-diff-on-failure --all-files
         env:
           SKIP: "no-commit-to-branch"
-  push:
+
+  semantic-release:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs:
+      - pre-commit
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - id: generate_token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.CICD_APP_ID }}
+          private-key: ${{ secrets.CICD_APP_PRIVATE_KEY }}
+
+      - name: Semantic Release
+        uses: cycjimmy/semantic-release-action@v3
+        env:
+          GITHUB_TOKEN: "${{ steps.generate_token.outputs.token }}"
+
+  pypi:
     runs-on: ubuntu-latest
     needs:
-      - test
+      - pre-commit
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
     steps:
       - uses: actions/checkout@v3
