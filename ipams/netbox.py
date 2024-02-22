@@ -33,7 +33,7 @@ class NetBoxConnector:
     def query_ip(self, ip: Union[IPv4Address, IPv6Address]) -> NetBoxIPTable:
         """Query NetBox for IP address"""
         results = NetBoxIPTable(self.name)
-        for q_ip in self.conn.ipam.ip_addresses.filter(q=str(ip)):
+        for q_ip in self.conn.ipam.ip_addresses.filter(address=str(ip)):
             results.add_row(
                 vrf=q_ip.vrf.name if q_ip.vrf else '',
                 tenant=q_ip.tenant.name if q_ip.tenant else '',
