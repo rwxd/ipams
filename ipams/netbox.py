@@ -38,6 +38,7 @@ class NetBoxConnector:
                 vrf=q_ip.vrf.name if q_ip.vrf else '',
                 tenant=q_ip.tenant.name if q_ip.tenant else '',
                 address=str(q_ip.address),
+                hostname=str(q_ip.dns_name),
                 description=str(q_ip.description),
                 link=f"{self.url.rstrip('/')}/ipam/ip-addresses/{q_ip.id}/",
             )

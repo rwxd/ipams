@@ -19,12 +19,13 @@ class NetBoxIPTable(DefaultNetBoxTable):
         self.title = name
         self.add_column('Address', justify='left', style='magenta', no_wrap=True)
         self.add_column('Tenant', justify='left', style='magenta')
+        self.add_column('Hostname', justify='left', style='magenta', no_wrap=True)
         self.add_column('VRF', justify='left', style='magenta')
         self.add_column('Description', justify='left', style='green')
         self.add_column('Link', justify='left', style='green')
 
-    def add_row(self, vrf: str, tenant: str, address: str, description: str, link: str):
-        super().add_row(address, tenant, vrf, description, link)
+    def add_row(self, vrf: str, tenant: str, address: str, hostname: str, description: str, link: str):
+        super().add_row(address, hostname, tenant, vrf, description, link)
 
 
 class NetBoxHostTable(DefaultNetBoxTable):
