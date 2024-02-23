@@ -2,5 +2,5 @@ pydantic==1.10.4
 pynetbox==7.0.1
 PyYAML==6.0.1
 requests==2.31.0
-rich==13.2.0
+rich==13.7.0
 typer==0.9.0
