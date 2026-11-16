@@ -34,7 +34,7 @@ jobs:
           persist-credentials: false
 
       - id: generate_token
-        uses: actions/create-github-app-token@29824e69f54612133e76f7eaac726eef6c875baf # v2
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3
         with:
           app-id: ${{ secrets.CICD_APP_ID }}
           private-key: ${{ secrets.CICD_APP_PRIVATE_KEY }}
